@@ -11,10 +11,13 @@
       </li>
     </ul>
     <dialog id="show-modal">
-      <form>
-        <p>{{ currentContact.first_name }} {{ currentContact.last_name }}</p>
-        <p>{{ currentContact.phone_number }}</p>
-        <p>{{ currentContact.email }}</p>
+      <form method="dialog">
+        <p>First Name: <input type="text" v-model="currentContact.first_name"></p>
+        <p>Last Name: <input type="text" v-model="currentContact.last_name"></p>
+        <p>Phone Number: <input type="text" v-model="currentContact.phone_number"></p>
+        <p>Email: <input type="text" v-model="currentContact.email"></p>
+        <button v-on:click="updateFunction(currentContact)">Update</button>
+        <button>Close</button>
       </form>
     </dialog>
   </div>
@@ -68,6 +71,20 @@ export default {
       this.currentContact = theContact;
       document.querySelector("#show-modal").showModal();
       console.log(theContact.first_name);
+    },
+    updateFunction: function(theContact) {
+      console.log("in the update function");
+      console.log(theContact.first_name)
+      axios
+        .patch(`http://localhost:3000/contacts/1.json`, {
+          first_name: theContact.first_name,
+          last_name: theContact.last_name,
+          phone_number: theContact.phone_number,
+          email: theContact.email
+        })
+        .then(response => {
+          console.log(response.data);
+        })
     }
   }
 };
