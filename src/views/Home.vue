@@ -3,10 +3,10 @@
     <!-- <h1>{{ contacts }}</h1> -->
     <h1>Here are all the contacts:</h1>
     <button v-on:click="createFunction()">Add Contact</button>
-    <input type="text" v-model="newContact.first_name">
-    <input type="text" v-model="newContact.last_name">
-    <input type="text" v-model="newContact.phone_number">
-    <input type="text" v-model="newContact.email">
+    <input type="text" v-model="first_name">
+    <input type="text" v-model="last_name">
+    <input type="text" v-model="phone_number">
+    <input type="text" v-model="email">
     <ul>
       <li v-for="contact in contacts">
        {{ contact.id }}
@@ -43,7 +43,7 @@ export default {
       message: "Hello World",
       contacts: [],
       currentContact: {},
-      newContact: {},
+      // newContact: {},
       first_name: "First Name",
       last_name: "Last Name",
       phone_number: "Phone Number",
@@ -67,10 +67,10 @@ export default {
       console.log("in the create function");
       axios 
         .post('http://localhost:3000/contacts.json', {
-          first_name: this.newContact.first_name,
-          last_name: this.newContact.last_name,
-          phone_number: this.newContact.phone_number,
-          email: this.newContact.email
+          first_name: this.first_name,
+          last_name: this.last_name,
+          phone_number: this.phone_number,
+          email: this.email
         }).then(response => {
           console.log(response.data);
           this.contacts.push(response.data);
