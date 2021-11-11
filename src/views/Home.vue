@@ -7,11 +7,16 @@
       <li v-for="contact in contacts">
        {{ contact.id }}
        {{ contact.first_name }} {{ contact.last_name }}
-       {{ contact.email }}
-       {{ contact.phone_number }}
-       <button v-on:click="showFunction()">Show More Info</button>
+       <button v-on:click="showFunction(contact)">Show More Info</button>
       </li>
     </ul>
+    <dialog id="show-modal">
+      <form>
+        <p>{{ currentContact.first_name }} {{ currentContact.last_name }}</p>
+        <p>{{ currentContact.phone_number }}</p>
+        <p>{{ currentContact.email }}</p>
+      </form>
+    </dialog>
   </div>
 </template>
 
@@ -28,7 +33,8 @@ export default {
   data: function() {
     return {
       message: "Hello World",
-      contacts: []
+      contacts: [],
+      currentContact: {}
     }
   },
   created: function() {
@@ -57,9 +63,11 @@ export default {
           this.contacts.push(response.data);
         })
     },
-    showFunction: function() {
+    showFunction: function(theContact) {
       console.log("in the show function");
-      // document.querySelector
+      this.currentContact = theContact;
+      document.querySelector("#show-modal").showModal();
+      console.log(theContact.first_name);
     }
   }
 };
