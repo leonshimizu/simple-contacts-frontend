@@ -2,11 +2,11 @@
   <div class="home">
     <!-- <h1>{{ contacts }}</h1> -->
     <h1>Here are all the contacts:</h1>
-    <button v-on:click="createFunction()">Add Contact</button>
     <input type="text" v-model="first_name">
     <input type="text" v-model="last_name">
     <input type="text" v-model="phone_number">
     <input type="text" v-model="email">
+    <button v-on:click="createFunction()">Add Contact</button>
     <ul>
       <li v-for="contact in contacts">
        {{ contact.id }}
