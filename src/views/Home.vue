@@ -3,10 +3,10 @@
     <!-- <h1>{{ contacts }}</h1> -->
     <h1>Here are all the contacts:</h1>
     <button v-on:click="createFunction()">Add Contact</button>
-    <input type="text" v-model="first_name">
-    <input type="text" v-model="last_name">
-    <input type="text" v-model="phone_number">
-    <input type="text" v-model="email">
+    <input type="text" v-model="newContact.first_name">
+    <input type="text" v-model="newContact.last_name">
+    <input type="text" v-model="newContact.phone_number">
+    <input type="text" v-model="newContact.email">
     <ul>
       <li v-for="contact in contacts">
        {{ contact.id }}
@@ -43,6 +43,7 @@ export default {
       message: "Hello World",
       contacts: [],
       currentContact: {},
+      newContact: {},
       first_name: "First Name",
       last_name: "Last Name",
       phone_number: "Phone Number",
@@ -66,10 +67,10 @@ export default {
       console.log("in the create function");
       axios 
         .post('http://localhost:3000/contacts.json', {
-          first_name: this.first_name,
-          last_name: this.last_name,
-          phone_number: this.phone_number,
-          email: this.email
+          first_name: this.newContact.first_name,
+          last_name: this.newContact.last_name,
+          phone_number: this.newContact.phone_number,
+          email: this.newContact.email
         }).then(response => {
           console.log(response.data);
           this.contacts.push(response.data);
@@ -85,7 +86,7 @@ export default {
       console.log("in the update function");
       console.log(theContact.first_name)
       axios
-        .patch(`http://localhost:3000/contacts/1.json`, {
+        .patch(`http://localhost:3000/contacts/${theContact.id}.json`, {
           first_name: theContact.first_name,
           last_name: theContact.last_name,
           phone_number: theContact.phone_number,
