@@ -2,11 +2,17 @@
   <div class="home">
     <!-- <h1>{{ contacts }}</h1> -->
     <h1>Here are all the contacts:</h1>
-    <input type="text" v-model="first_name">
-    <input type="text" v-model="last_name">
-    <input type="text" v-model="phone_number">
-    <input type="text" v-model="email">
-    <button v-on:click="createFunction()">Add Contact</button>
+    <dialog id="new-contact">
+      <form method="dialog">
+        <input type="text" v-model="first_name">
+        <input type="text" v-model="last_name">
+        <input type="text" v-model="phone_number">
+        <input type="text" v-model="email">
+        <button v-on:click="createFunction()">Submit</button>
+        <button>Close</button>
+      </form>
+    </dialog>  
+    <button v-on:click="createModal()">Add Contact</button>
     <ul>
       <li v-for="contact in contacts">
        {{ contact.id }}
@@ -55,7 +61,7 @@ export default {
   },
   methods: {
     indexFunction: function() {
-      console.log("in the index function");
+      // console.log("in the index function");
       axios
         .get('http://localhost:3000/contacts')
         .then(response => {
@@ -64,7 +70,7 @@ export default {
         })
     },
     createFunction: function() {
-      console.log("in the create function");
+      // console.log("in the create function");
       axios 
         .post('http://localhost:3000/contacts.json', {
           first_name: this.first_name,
@@ -76,15 +82,18 @@ export default {
           this.contacts.push(response.data);
         })
     },
+    createModal: function() {
+      document.querySelector("#new-contact").showModal();
+    },
     showFunction: function(theContact) {
-      console.log("in the show function");
+      // console.log("in the show function");
       this.currentContact = theContact;
       document.querySelector("#show-modal").showModal();
-      console.log(theContact.first_name);
+      // console.log(theContact.first_name);
     },
     updateFunction: function(theContact) {
-      console.log("in the update function");
-      console.log(theContact.first_name)
+      // console.log("in the update function");
+      // console.log(theContact.first_name)
       axios
         .patch(`http://localhost:3000/contacts/${theContact.id}.json`, {
           first_name: theContact.first_name,
@@ -97,8 +106,8 @@ export default {
         })
     },
     deleteFunction: function(theContact) {
-      console.log("in the delete function");
-      console.log(theContact.id);
+      // console.log("in the delete function");
+      // console.log(theContact.id);
       var index = this.contacts.indexOf(theContact);
       this.contacts.splice(index, 1);
       axios 
