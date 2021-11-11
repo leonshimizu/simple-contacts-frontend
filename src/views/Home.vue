@@ -3,6 +3,10 @@
     <!-- <h1>{{ contacts }}</h1> -->
     <h1>Here are all the contacts:</h1>
     <button v-on:click="createFunction()">Add Contact</button>
+    <input type="text" v-model="first_name">
+    <input type="text" v-model="last_name">
+    <input type="text" v-model="phone_number">
+    <input type="text" v-model="email">
     <ul>
       <li v-for="contact in contacts">
        {{ contact.id }}
@@ -38,7 +42,11 @@ export default {
     return {
       message: "Hello World",
       contacts: [],
-      currentContact: {}
+      currentContact: {},
+      first_name: "First Name",
+      last_name: "Last Name",
+      phone_number: "Phone Number",
+      email: "email"
     }
   },
   created: function() {
@@ -58,10 +66,10 @@ export default {
       console.log("in the create function");
       axios 
         .post('http://localhost:3000/contacts.json', {
-          first_name: "Stassie",
-          last_name: "Shimizu",
-          email: "stassie@gmail.com",
-          phone_number: "0987654321"
+          first_name: this.first_name,
+          last_name: this.last_name,
+          phone_number: this.phone_number,
+          email: this.email
         }).then(response => {
           console.log(response.data);
           this.contacts.push(response.data);
@@ -90,9 +98,10 @@ export default {
     deleteFunction: function(theContact) {
       console.log("in the delete function");
       console.log(theContact.id);
-      // var index = indexOf(theContact);
+      var index = this.contacts.indexOf(theContact);
+      this.contacts.splice(index, 1);
       axios 
-        .delete(`http://localhost:3000/contacts/1.json`)
+        .delete(`http://localhost:3000/contacts/${theContact.id}.json`)
         .then(response => {
           console.log(response.data);
         })
