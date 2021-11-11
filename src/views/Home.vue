@@ -17,6 +17,7 @@
         <p>Phone Number: <input type="text" v-model="currentContact.phone_number"></p>
         <p>Email: <input type="text" v-model="currentContact.email"></p>
         <button v-on:click="updateFunction(currentContact)">Update</button>
+        <button v-on:click="deleteFunction(currentContact)">Delete</button>
         <button>Close</button>
       </form>
     </dialog>
@@ -82,6 +83,16 @@ export default {
           phone_number: theContact.phone_number,
           email: theContact.email
         })
+        .then(response => {
+          console.log(response.data);
+        })
+    },
+    deleteFunction: function(theContact) {
+      console.log("in the delete function");
+      console.log(theContact.id);
+      // var index = indexOf(theContact);
+      axios 
+        .delete(`http://localhost:3000/contacts/1.json`)
         .then(response => {
           console.log(response.data);
         })
