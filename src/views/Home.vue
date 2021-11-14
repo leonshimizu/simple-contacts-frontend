@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <!-- <h1>{{ contacts }}</h1> -->
+    <p v-for="error in errors">{{ error }}</p>
     <h1>Here are all the contacts:</h1>
     <dialog id="new-contact">
       <form method="dialog">
@@ -53,7 +53,8 @@ export default {
       first_name: "First Name",
       last_name: "Last Name",
       phone_number: "Phone Number",
-      email: "email"
+      email: "email",
+      errors: []
     }
   },
   created: function() {
@@ -80,6 +81,9 @@ export default {
         }).then(response => {
           console.log(response.data);
           this.contacts.push(response.data);
+        }).catch(error => {
+          console.log(error.response.data.errors);
+          this.errors = error.response.data.errors;
         })
     },
     createModal: function() {
